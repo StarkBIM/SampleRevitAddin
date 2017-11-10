@@ -10,6 +10,12 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
 
     using JetBrains.Annotations;
 
+    using RvtTestRunner;
+    using RvtTestRunner.Util;
+
+    /// <summary>
+    /// Base class for all test sets that require access to an ExternalCommandData instance
+    /// </summary>
     public abstract class RvtTestSetBase
     {
         [NotNull]
@@ -21,6 +27,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
         protected RvtTestSetBase()
         {
             // Need to get the CommandData from the Test Runner
+            _commandData = RunnerCommand.CommandData.ThrowIfNull();
         }
 
         /// <summary>
@@ -29,6 +36,10 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
         /// <returns>True if the tests should execute, otherwise false</returns>
         public abstract bool IsTestContextValid();
 
+        /// <summary>
+        /// Gets the command data instance initialized by the RunnerCommand
+        /// </summary>
+        /// <returns>THe command data</returns>
         [NotNull]
         protected ExternalCommandData GetCommandData()
         {

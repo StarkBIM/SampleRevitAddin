@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+  	<AddInId>10e8c040-420a-42d2-9af7-85ec45e77be5</AddInId>
+    <Name>StarkBIM.SampleRevitApp.RvtAddin</Name>
+    <Assembly>C:\Path\To\StarkBIM.SampleRevitApp.RvtAddin.dll</Assembly>
+    <FullClassName>StarkBIM.SampleRevitApp.RvtAddin.App</FullClassName>
+    <VendorId>com.starkbim</VendorId>
+    <VendorDescription>StarkBIM Inc., https://starkbim.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>

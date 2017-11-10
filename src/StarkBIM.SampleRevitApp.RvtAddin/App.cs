@@ -18,12 +18,10 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
 
     using JetBrains.Annotations;
 
+    using StarkBIM.SampleRevitApp.Commands.Core;
+    using StarkBIM.SampleRevitApp.Commands.Util;
     using StarkBIM.SampleRevitApp.Helpers;
-    using StarkBIM.SampleRevitApp.Model.Core;
-    using StarkBIM.SampleRevitApp.Model.Extensions;
-    using StarkBIM.SampleRevitApp.Model.Services;
     using StarkBIM.SampleRevitApp.RvtAddin.Configuration;
-    using StarkBIM.SampleRevitApp.RvtAddin.Core;
 
     /// <summary>
     ///     The main application class loaded by Revit
@@ -41,11 +39,8 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
         [CanBeNull]
         private readonly AssemblyResolver _assemblyResolver;
 
-        [CanBeNull]
-        private readonly IDialogService _dialogService;
-
-        [CanBeNull]
-        private readonly ILogService _logService;
+        ////[CanBeNull]
+        ////private readonly IDialogService _dialogService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
@@ -62,16 +57,15 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterModule<CommandModule>();
-            containerBuilder.RegisterModule<MainModule>();
 
             var container = containerBuilder.Build();
 
             _autofacScope = container.BeginLifetimeScope();
 
-            _dialogService = _autofacScope.Resolve<IDialogService>();
-            _logService = _autofacScope.Resolve<ILogService>();
+            ////_dialogService = _autofacScope.Resolve<IDialogService>();
+            ////_autofacScope.Resolve<ILogService>();
 
-            Mapper.Initialize(cfg => cfg.AddProfile<MainProfile>());
+            Mapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
         }
 
         /// <inheritdoc />
@@ -131,21 +125,21 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
             "ReSharper",
             "ConstantConditionalAccessQualifier",
             Justification = "Could potentially be called before the services are initialized")]
-        private void CurrentDomainOnUnhandledException([NotNull] object sender, [NotNull] UnhandledExceptionEventArgs e)
+        private static void CurrentDomainOnUnhandledException([NotNull] object sender, [NotNull] UnhandledExceptionEventArgs e)
         {
             var exception = e.ExceptionObject as Exception;
 
-            string programClosing = e.IsTerminating ? "Program is terminating" : "Program is not terminating";
+            ////string programClosing = e.IsTerminating ? "Program is terminating" : "Program is not terminating";
 
             // Use the instance here, because there is a chance the static class has not yet been initialized
-            _logService?.LogCritical($"Unhandled exception of type {sender}. {programClosing}.");
+            ////_logService?.LogCritical($"Unhandled exception of type {sender}. {programClosing}.");
 
             if (exception == null)
             {
                 return;
             }
 
-            _dialogService?.NotifyException(exception, null, LogLevel.Critical);
+            TaskDialog.Show("Unhandled Exception", ExceptionUtil.CreateExceptionMessage(exception));
         }
     }
 }

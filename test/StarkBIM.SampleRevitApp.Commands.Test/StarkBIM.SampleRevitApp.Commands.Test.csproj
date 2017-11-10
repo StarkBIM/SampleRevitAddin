@@ -161,7 +161,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.1</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\SharedCodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\TestClassRuleSet.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '2018|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -224,8 +224,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="RvtTestRunner">
+      <HintPath>..\..\..\RvtTestRunner\src\RvtTestRunner\bin\2017\RvtTestRunner.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Telerik.JustMock">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik JustMock\Libraries\Telerik.JustMock.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="RevitAPI" Condition=" '$(Configuration)' == '2015' ">
@@ -354,8 +360,18 @@
       <Link>stylecop.json</Link>
     </AdditionalFiles>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CommandsFixture.cs" />
+    <Compile Include="SampleCommand\EnterCsvFileNameViewModelTests.cs" />
     <Compile Include="SampleCommand\RvtTestSetBase.cs" />
     <Compile Include="SampleCommand\SampleCommandTests.cs" />
+    <Compile Include="SampleCommand\SampleCommandTestsRealData.cs" />
+    <Compile Include="SampleCommand\Services\ValidSaveFilePathCheckerTests.cs" />
+    <Compile Include="SampleCommand\Services\DataTableCreatorTests.cs" />
+    <Compile Include="SampleCommand\Services\DataWriterTests.cs" />
+    <Compile Include="SampleCommand\Services\ElementCollectorTests.cs" />
+    <Compile Include="SampleCommand\Services\ElementRetrieverTests.cs" />
+    <Compile Include="SampleCommand\Services\FilePathSelectorTests.cs" />
+    <Compile Include="SampleCommand\Services\RvtClassMapperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac">
@@ -376,6 +392,9 @@
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
       <Version>2.3.0-beta1</Version>
     </PackageReference>
+    <PackageReference Include="Moq">
+      <Version>4.7.145</Version>
+    </PackageReference>
     <PackageReference Include="MvvmLightLibsStd10">
       <Version>5.4.0.1-alpha</Version>
     </PackageReference>
@@ -383,7 +402,13 @@
       <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="reactiveui">
-      <Version>8.0.0-alpha0108</Version>
+      <Version>8.0.0-alpha0110</Version>
+    </PackageReference>
+    <PackageReference Include="ReactiveUI.Testing">
+      <Version>8.0.0-alpha0110</Version>
+    </PackageReference>
+    <PackageReference Include="ReactiveUI.WPF">
+      <Version>8.0.0-alpha0110</Version>
     </PackageReference>
     <PackageReference Include="ResharperCodeContractNullability">
       <Version>1.0.8</Version>
@@ -400,6 +425,9 @@
     <PackageReference Include="xunit.analyzers">
       <Version>0.7.0</Version>
     </PackageReference>
+    <PackageReference Include="xunit.assemblyfixture">
+      <Version>2.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\StarkBIM.SampleRevitApp.Commands\StarkBIM.SampleRevitApp.Commands.csproj">
@@ -410,14 +438,24 @@
       <Project>{de1a8e8d-b65b-45c9-80b8-048ccde9c501}</Project>
       <Name>StarkBIM.SampleRevitApp.Helpers</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json">
-      <Link>stylecop.json</Link>
-    </AdditionalFiles>
+    <ProjectReference Include="..\..\src\StarkBIM.SampleRevitApp.Model\StarkBIM.SampleRevitApp.Model.csproj">
+      <Project>{05698FFA-DFFA-402E-8D96-16E4A999B559}</Project>
+      <Name>StarkBIM.SampleRevitApp.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="TelerikCodeWeaverProfilerLib">
+      <Guid>{DC2D6321-28A9-4AB0-92FC-EBA40D6FF48F}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

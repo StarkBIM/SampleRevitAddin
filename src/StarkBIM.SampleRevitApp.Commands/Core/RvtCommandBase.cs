@@ -8,8 +8,6 @@ namespace StarkBIM.SampleRevitApp.Commands.Core
 
     using Autodesk.Revit.UI;
 
-    using StarkBIM.SampleRevitApp.Model.Core;
-
     /// <summary>
     ///     Base class for IRvtCommand implementations
     /// </summary>
@@ -43,6 +41,6 @@ namespace StarkBIM.SampleRevitApp.Commands.Core
         public virtual ContextualHelp ContextualHelp { get; } = null;
 
         /// <inheritdoc />
-        public abstract IRvtCommandResult Run(ExternalCommandData commandData);
+        public abstract RvtCommandResult Run(ExternalCommandData commandData);
     }
 }

@@ -11,9 +11,9 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Test
 
     using JetBrains.Annotations;
 
-    using StarkBIM.SampleRevitApp.Model.Util;
-    using StarkBIM.SampleRevitApp.RvtAddin.Configuration;
-    using StarkBIM.SampleRevitApp.RvtAddin.Core;
+    using StarkBIM.SampleRevitApp.Commands.Core;
+    using StarkBIM.SampleRevitApp.Commands.Util;
+    using StarkBIM.SampleRevitApp.Helpers;
 
     /// <summary>
     ///     Fixture that sets up the assembly resolve event to find Revit assemblies
@@ -43,7 +43,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Test
             AppDomain.CurrentDomain.AssemblyResolve += _assemblyResolver.OnAssemblyResolve;
 
             // Must come after the AssemblyResolve event handler
-            Mapper.Initialize(cfg => cfg.AddProfile<MainProfile>());
+            Mapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
         }
 
         /// <summary>

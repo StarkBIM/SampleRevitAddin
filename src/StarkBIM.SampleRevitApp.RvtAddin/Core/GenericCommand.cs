@@ -17,7 +17,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Core
 
     using JetBrains.Annotations;
 
-    using StarkBIM.SampleRevitApp.Model.Core;
+    using StarkBIM.SampleRevitApp.Commands.Core;
 
     /// <summary>
     ///     The generic command means that we don't need to tag each class with the Transaction attribute.
@@ -52,7 +52,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Core
                 // This initializes the command with all the necessary services
                 var commandRunner = scope.Resolve<TCommand>();
 
-                IRvtCommandResult result = commandRunner.Run(commandData);
+                RvtCommandResult result = commandRunner.Run(commandData);
 
                 message = result.Message;
 

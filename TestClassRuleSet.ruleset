@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Test Class Rule Set" Description=" Rule Set for Test Classes of SampleRevitApp. Child of SharedCodeAnalysis" ToolsVersion="15.0">
+  <Include Path="..\rvttestrunner\sharedcodeanalysis.ruleset" Action="Default" />
+  <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
+    <Rule Id="CA1707" Action="None" />
+  </Rules>
+</RuleSet>
