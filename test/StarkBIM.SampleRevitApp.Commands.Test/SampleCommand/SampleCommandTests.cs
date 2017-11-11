@@ -55,6 +55,9 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
         [NotNull]
         private readonly Mock<IFilePathSelector> _mockedFilePathSelector;
 
+        [NotNull]
+        private readonly Mock<IRvtCommandProperties<SampleCommand>> _mockedSampleProperties;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SampleCommandTests"/> class.
         /// </summary>
@@ -68,7 +71,17 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
 
             _mockedDataWriter = new Mock<IDataWriter>();
 
-            _emptySampleCommand = new SampleCommand(_mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
+            _mockedSampleProperties = new Mock<IRvtCommandProperties<SampleCommand>>();
+            _mockedSampleProperties.SetupGet(p => p.Name).Returns("Sample");
+
+            _mockedSampleProperties.SetupGet(p => p.DisplayName).Returns("Sample Command");
+
+            _emptySampleCommand = new SampleCommand(
+                                                    _mockedSampleProperties.Object,
+                                                    _mockedSheetRetriever.Object,
+                                                    _mockedDataTableCreator.Object,
+                                                    _mockedFilePathSelector.Object,
+                                                    _mockedDataWriter.Object);
 
             _externalCommandData = JustMock.Create<ExternalCommandData>();
 
@@ -116,12 +129,17 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
 
             _mockedDataWriter.Setup(writer => writer.WriteDataToFile(It.IsAny<DataTable>(), It.IsAny<string>())).Returns(true);
 
-            var sampleCommand = new SampleCommand(_mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
+            var sampleCommand = new SampleCommand(
+                                                  _mockedSampleProperties.Object,
+                                                  _mockedSheetRetriever.Object,
+                                                  _mockedDataTableCreator.Object,
+                                                  _mockedFilePathSelector.Object,
+                                                  _mockedDataWriter.Object);
 
             var result = sampleCommand.Run(_externalCommandData);
 
             Assert.Equal(ResultEnum.Succeeded, result.RvtResult);
-            Assert.Null(result.Message);
+            Assert.Equal("Successfully wrote data to filepath.csv", result.Message);
         }
 
         /// <summary>
@@ -143,7 +161,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
 
             _mockedDataWriter.Setup(writer => writer.WriteDataToFile(It.IsAny<DataTable>(), It.IsAny<string>())).Returns(false);
 
-            var sampleCommand = new SampleCommand(_mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
+            var sampleCommand = new SampleCommand(_mockedSampleProperties.Object, _mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
 
             var result = sampleCommand.Run(_externalCommandData);
 
@@ -166,7 +184,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
             // Need to return at least one sheet to get as far as picking the file
             _mockedSheetRetriever.Setup(retriever => retriever.GetSheets(It.IsAny<Document>())).Returns(new List<Sheet> { new Sheet() });
 
-            var sampleCommand = new SampleCommand(_mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
+            var sampleCommand = new SampleCommand(_mockedSampleProperties.Object, _mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
 
             var result = sampleCommand.Run(_externalCommandData);
 
@@ -207,7 +225,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
 
             _mockedSheetRetriever.Setup(retriever => retriever.GetSheets(It.IsAny<Document>())).Returns(new List<Sheet>());
 
-            var sampleCommand = new SampleCommand(_mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
+            var sampleCommand = new SampleCommand(_mockedSampleProperties.Object, _mockedSheetRetriever.Object, _mockedDataTableCreator.Object, _mockedFilePathSelector.Object, _mockedDataWriter.Object);
 
             var result = sampleCommand.Run(_externalCommandData);
 

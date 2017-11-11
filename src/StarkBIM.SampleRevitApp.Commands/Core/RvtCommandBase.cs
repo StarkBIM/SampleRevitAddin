@@ -4,41 +4,39 @@
 
 namespace StarkBIM.SampleRevitApp.Commands.Core
 {
-    using System.Windows.Media;
+    using System;
 
     using Autodesk.Revit.UI;
+
+    using JetBrains.Annotations;
 
     /// <summary>
     ///     Base class for IRvtCommand implementations
     /// </summary>
-    public abstract class RvtCommandBase : IRvtCommand
+    /// <typeparam name="TCommand">The type of the command</typeparam>
+    public abstract class RvtCommandBase<TCommand> : IRvtCommand
+        where TCommand : class, IRvtCommand
     {
-        /// <inheritdoc />
-        public abstract string Name { get; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RvtCommandBase{TCommand}"/> class.
+        /// </summary>
+        /// <param name="commandProperties">The command properties</param>
+        protected RvtCommandBase([NotNull] IRvtCommandProperties<TCommand> commandProperties)
+        {
+            if (commandProperties == null)
+            {
+                throw new ArgumentNullException(nameof(commandProperties));
+            }
+
+            Name = commandProperties.Name;
+            DisplayName = commandProperties.DisplayName;
+        }
 
         /// <inheritdoc />
-        public abstract string DisplayName { get; }
+        public string Name { get; }
 
         /// <inheritdoc />
-        public virtual string LongDescription { get; } = null;
-
-        /// <inheritdoc />
-        public virtual IExternalCommandAvailability CommandAvailability { get; } = null;
-
-        /// <inheritdoc />
-        public virtual ImageSource Image { get; } = null;
-
-        /// <inheritdoc />
-        public virtual ImageSource LargeImage { get; } = null;
-
-        /// <inheritdoc />
-        public virtual string ToolTip { get; } = null;
-
-        /// <inheritdoc />
-        public virtual ImageSource ToolTipImage { get; } = null;
-
-        /// <inheritdoc />
-        public virtual ContextualHelp ContextualHelp { get; } = null;
+        public string DisplayName { get; }
 
         /// <inheritdoc />
         public abstract RvtCommandResult Run(ExternalCommandData commandData);

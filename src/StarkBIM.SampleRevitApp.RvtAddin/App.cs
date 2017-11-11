@@ -5,6 +5,7 @@
 namespace StarkBIM.SampleRevitApp.RvtAddin
 {
     using System;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
@@ -19,9 +20,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
     using JetBrains.Annotations;
 
     using StarkBIM.SampleRevitApp.Commands.Core;
+    using StarkBIM.SampleRevitApp.Commands.SampleCmd;
     using StarkBIM.SampleRevitApp.Commands.Util;
     using StarkBIM.SampleRevitApp.Helpers;
     using StarkBIM.SampleRevitApp.RvtAddin.Configuration;
+    using StarkBIM.SampleRevitApp.RvtAddin.Core;
+    using StarkBIM.SampleRevitApp.RvtAddin.Extensions;
 
     /// <summary>
     ///     The main application class loaded by Revit
@@ -33,40 +37,86 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
     /// </remarks>
     public class App : IExternalApplication
     {
+        /// <summary>
+        ///     The directory containing updated assemblies that can be loaded dynamically. Allows commands to be modified without
+        ///     reloading Revit
+        /// </summary>
+        [NotNull]
+        public const string UpdatedAssemblyDirName = "UpdatedAssemblies";
+
+        /// <summary>
+        ///     The name to register the lifetime scope with. It is important to register the lifetime scope with a tag, otherwise
+        ///     the ServiceLocator may retrieve the scope from another addin using this architecture (e.g. StarkBIM tools)
+        /// </summary>
+        public const string LifetimeScopeName = "SampleRevitApp";
+
         [CanBeNull]
         private readonly ILifetimeScope _autofacScope;
 
         [CanBeNull]
         private readonly AssemblyResolver _assemblyResolver;
 
+        [NotNull]
+        private readonly string _assemblyDir;
+
         ////[CanBeNull]
         ////private readonly IDialogService _dialogService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="App"/> class.
-        /// Initialize as much logic in the constructor as possible
+        ///     Initializes a new instance of the <see cref="App" /> class.
+        ///     Initialize as much logic in the constructor as possible
         /// </summary>
         public App()
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            Instance = this;
 
-            string location = Assembly.GetExecutingAssembly().Location;
-            _assemblyResolver = new AssemblyResolver(Path.GetDirectoryName(location).ThrowIfNull());
-            AppDomain.CurrentDomain.AssemblyResolve += _assemblyResolver.OnAssemblyResolve;
+            try
+            {
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
-            var containerBuilder = new ContainerBuilder();
+                string location = Assembly.GetExecutingAssembly().Location;
+                _assemblyDir = Path.GetDirectoryName(location).ThrowIfNull();
 
-            containerBuilder.RegisterModule<CommandModule>();
+                _assemblyResolver = new AssemblyResolver(_assemblyDir);
+                AppDomain.CurrentDomain.AssemblyResolve += _assemblyResolver.OnAssemblyResolve;
 
-            var container = containerBuilder.Build();
+                var containerBuilder = new ContainerBuilder();
 
-            _autofacScope = container.BeginLifetimeScope();
+                containerBuilder.RegisterModule<CommandModule>();
 
-            ////_dialogService = _autofacScope.Resolve<IDialogService>();
-            ////_autofacScope.Resolve<ILogService>();
+                var container = containerBuilder.Build();
 
-            Mapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
+                _autofacScope = container.BeginLifetimeScope("SampleRevitApp");
+
+                // The service locator is required in classes that are not initiated by this program
+                // It is used for the GenericCommand class because we do not control its initialization
+                ////var autofacServiceLocator = new AutofacServiceLocator(_autofacScope);
+                ////ServiceLocator.SetLocatorProvider(() => autofacServiceLocator);
+
+                ////_dialogService = _autofacScope.Resolve<IDialogService>();
+                ////_autofacScope.Resolve<ILogService>();
+
+                Mapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
+
+#if DEBUG
+                Mapper.AssertConfigurationIsValid();
+#endif
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
+
+        /// <summary>
+        ///     Gets the LifetimeScope instance for this application. ServiceLocator is throwing strange exceptions
+        /// </summary>
+        [CanBeNull]
+        public static ILifetimeScope LifetimeScope => Instance.ThrowIfNull()._autofacScope;
+
+        [CanBeNull]
+        private static App Instance { get; set; }
 
         /// <inheritdoc />
         public Result OnShutdown([NotNull] UIControlledApplication application)
@@ -94,9 +144,23 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
         /// <returns>The result, always Succeeded unless an exception is thrown</returns>
         public Result OnStartup([NotNull] UIControlledApplication application)
         {
-            application.ControlledApplication.ApplicationInitialized += ControlledApplicationOnApplicationInitialized;
+            try
+            {
+                CleanUpUpdatedAssembliesDir();
 
-            return Result.Succeeded;
+                RibbonPanel ribbonPanel = application.CreateRibbonPanel(Tab.AddIns, "Sample");
+
+                ribbonPanel.AddItem(CreatePushButtonData<SampleCommand>());
+
+                application.ControlledApplication.ApplicationInitialized += ControlledApplicationOnApplicationInitialized;
+
+                return Result.Succeeded;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         private static void ControlledApplicationOnApplicationInitialized([NotNull] object sender, [NotNull] ApplicationInitializedEventArgs applicationInitializedEventArgs)
@@ -127,19 +191,79 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
             Justification = "Could potentially be called before the services are initialized")]
         private static void CurrentDomainOnUnhandledException([NotNull] object sender, [NotNull] UnhandledExceptionEventArgs e)
         {
-            var exception = e.ExceptionObject as Exception;
-
             ////string programClosing = e.IsTerminating ? "Program is terminating" : "Program is not terminating";
 
             // Use the instance here, because there is a chance the static class has not yet been initialized
             ////_logService?.LogCritical($"Unhandled exception of type {sender}. {programClosing}.");
 
-            if (exception == null)
+            if (!(e.ExceptionObject is Exception exception))
             {
                 return;
             }
 
-            TaskDialog.Show("Unhandled Exception", ExceptionUtil.CreateExceptionMessage(exception));
+            TaskDialog.Show("Unhandled Exception", exception.CreateExceptionMessage());
+        }
+
+        private void CleanUpUpdatedAssembliesDir()
+        {
+            // On Startup, we want to clear the UpdatedAssemblies directory
+            var updatedAssembliesDir = Path.Combine(_assemblyDir, UpdatedAssemblyDirName);
+
+            if (!Directory.Exists(updatedAssembliesDir))
+            {
+                return;
+            }
+
+            var filePaths = Directory.GetFiles(updatedAssembliesDir);
+
+            foreach (var filePath in filePaths)
+            {
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch (Exception ex)
+                {
+                    // It's not the end of the world if this fails
+                    Debug.WriteLine(ex.CreateExceptionMessage());
+                }
+            }
+
+            var subdirectories = Directory.GetDirectories(updatedAssembliesDir);
+
+            foreach (var filePath in subdirectories)
+            {
+                try
+                {
+                    Directory.Delete(filePath, true);
+                }
+                catch (Exception ex)
+                {
+                    // It's not the end of the world if this fails
+                    Debug.WriteLine(ex.CreateExceptionMessage());
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Creates a pushbutton for an RvtCommand
+        /// </summary>
+        /// <typeparam name="TCommand">The type of the command</typeparam>
+        /// <returns>A PushbuttonData object for the command</returns>
+        [NotNull]
+        private PushButtonData CreatePushButtonData<TCommand>()
+            where TCommand : class, IRvtCommand
+        {
+            var commandProperties = _autofacScope.Resolve<IRvtCommandProperties<TCommand>>();
+
+            var pushButtonData = new PushButtonData(
+                                                    commandProperties.Name,
+                                                    commandProperties.DisplayName,
+                                                    typeof(GenericCommand<>).Assembly.Location,
+                                                    typeof(GenericCommand<TCommand>).FullName)
+                .SetAllPushButtonDataProperties(commandProperties);
+
+            return pushButtonData;
         }
     }
 }

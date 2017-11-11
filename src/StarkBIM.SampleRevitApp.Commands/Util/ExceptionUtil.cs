@@ -24,7 +24,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Util
         /// <param name="currentDocumentName">The active document name, optionally</param>
         /// <returns>The exception text</returns>
         [NotNull]
-        public static string CreateExceptionMessage([NotNull] Exception ex, [CanBeNull] string currentDocumentName = null)
+        public static string CreateExceptionMessage([NotNull] this Exception ex, [CanBeNull] string currentDocumentName = null)
         {
             if (ex == null)
             {

@@ -25,12 +25,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="buttonData">The button data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with properties added</returns>
         [NotNull]
         public static T SetAllButtonProperties<T, TCommand>(
             [NotNull] this T buttonData,
-            [NotNull] TCommand command)
+            [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : ButtonData
             where TCommand : class, IRvtCommand
         {
@@ -39,12 +39,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(buttonData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return buttonData.SetAllRibbonItemProperties(command).WithImage(command).WithLargeImage(command);
+            return buttonData.SetAllRibbonItemProperties(properties).WithImage(properties).WithLargeImage(properties);
         }
 
         /// <summary>
@@ -53,12 +53,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="buttonData">The button data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with properties added</returns>
         [NotNull]
         public static T SetAllPushButtonDataProperties<T, TCommand>(
             [NotNull] this T buttonData,
-            [NotNull] TCommand command)
+            [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : PushButtonData
             where TCommand : class, IRvtCommand
         {
@@ -67,12 +67,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(buttonData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return buttonData.SetAllButtonProperties(command).WithAvailabilityClass(command);
+            return buttonData.SetAllButtonProperties(properties).WithAvailabilityClass(properties);
         }
 
         /// <summary>
@@ -81,10 +81,10 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="ribbonItemData">The ribbon item data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with properties added</returns>
         [NotNull]
-        public static T SetAllRibbonItemProperties<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] TCommand command)
+        public static T SetAllRibbonItemProperties<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : RibbonItemData
             where TCommand : class, IRvtCommand
         {
@@ -93,27 +93,27 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(ribbonItemData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return ribbonItemData.WithToolTip(command).WithToolTipImage(command).WithContextualHelp(command)
-                .WithLongDescription(command);
+            return ribbonItemData.WithToolTip(properties).WithToolTipImage(properties).WithContextualHelp(properties)
+                .WithLongDescription(properties);
         }
 
         /// <summary>
-        /// Adds the availability class information to a button from a command
+        /// Adds the availability class information to a button from a properties
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="buttonData">The button data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with the availability class name added</returns>
         [NotNull]
         public static T WithAvailabilityClass<T, TCommand>(
             [NotNull] this T buttonData,
-            [NotNull] TCommand command)
+            [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : PushButtonData
             where TCommand : class, IRvtCommand
         {
@@ -122,23 +122,23 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(buttonData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            if (command.CommandAvailability == null)
+            if (properties.CommandAvailability == null)
             {
                 return buttonData;
             }
 
-            string buttonDataAvailabilityClassName = command.CommandAvailability.GetType().FullName;
+            string buttonDataAvailabilityClassName = properties.CommandAvailability.GetType().FullName;
 
             return buttonData.WithAvailabilityClass(buttonDataAvailabilityClassName);
         }
 
         /// <summary>
-        /// Adds the availability class name to a command
+        /// Adds the availability class name to a properties
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <param name="buttonData">The button data instance</param>
@@ -161,15 +161,15 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         }
 
         /// <summary>
-        /// Adds the contextual help from the given command to the ribbon item data
+        /// Adds the contextual help from the given properties to the ribbon item data
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="ribbonItemData">The ribbon item data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with the contextual help added</returns>
         [NotNull]
-        public static T WithContextualHelp<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] TCommand command)
+        public static T WithContextualHelp<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : RibbonItemData
             where TCommand : class, IRvtCommand
         {
@@ -178,12 +178,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(ribbonItemData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return command.ContextualHelp != null ? ribbonItemData.WithContextualHelp(command.ContextualHelp) : ribbonItemData;
+            return properties.ContextualHelp != null ? ribbonItemData.WithContextualHelp(properties.ContextualHelp) : ribbonItemData;
         }
 
         /// <summary>
@@ -213,17 +213,17 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         }
 
         /// <summary>
-        /// Adds the image from the given command to the button data
+        /// Adds the image from the given properties to the button data
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="buttonData">The button data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with the image added</returns>
         [NotNull]
         public static T WithImage<T, TCommand>(
             [NotNull] this T buttonData,
-            [NotNull] TCommand command)
+            [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : ButtonData
             where TCommand : class, IRvtCommand
         {
@@ -232,12 +232,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(buttonData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return command.Image == null ? buttonData : buttonData.WithImage(command.Image);
+            return properties.Image == null ? buttonData : buttonData.WithImage(properties.Image);
         }
 
         /// <summary>
@@ -264,17 +264,17 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         }
 
         /// <summary>
-        /// Adds the large image from the given command to the button data
+        /// Adds the large image from the given properties to the button data
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="buttonData">The button data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with the large image added</returns>
         [NotNull]
         public static T WithLargeImage<T, TCommand>(
             [NotNull] this T buttonData,
-            [NotNull] TCommand command)
+            [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : ButtonData
             where TCommand : class, IRvtCommand
         {
@@ -283,12 +283,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(buttonData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return buttonData.WithLargeImage(command.LargeImage);
+            return buttonData.WithLargeImage(properties.LargeImage);
         }
 
         /// <summary>
@@ -315,15 +315,15 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         }
 
         /// <summary>
-        /// Adds the long description from the given command to the ribbon item data
+        /// Adds the long description from the given properties to the ribbon item data
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="ribbonItemData">The ribbon item data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with the long description added</returns>
         [NotNull]
-        public static T WithLongDescription<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] TCommand command)
+        public static T WithLongDescription<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : RibbonItemData
             where TCommand : class, IRvtCommand
         {
@@ -332,12 +332,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(ribbonItemData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return !command.LongDescription.IsNullOrWhiteSpace() ? ribbonItemData.WithLongDescription(command.LongDescription) : ribbonItemData;
+            return !properties.LongDescription.IsNullOrWhiteSpace() ? ribbonItemData.WithLongDescription(properties.LongDescription) : ribbonItemData;
         }
 
         /// <summary>
@@ -362,15 +362,15 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         }
 
         /// <summary>
-        /// Adds the tooltip from the given command to the ribbon item data
+        /// Adds the tooltip from the given properties to the ribbon item data
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="ribbonItemData">The ribbon item data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with the tooltip added</returns>
         [NotNull]
-        public static T WithToolTip<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] TCommand command)
+        public static T WithToolTip<T, TCommand>([NotNull] this T ribbonItemData, [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : RibbonItemData
             where TCommand : class, IRvtCommand
         {
@@ -379,12 +379,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(ribbonItemData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return !command.ToolTip.IsNullOrWhiteSpace() ? ribbonItemData.WithToolTip(command.ToolTip) : ribbonItemData;
+            return !properties.ToolTip.IsNullOrWhiteSpace() ? ribbonItemData.WithToolTip(properties.ToolTip) : ribbonItemData;
         }
 
         /// <summary>
@@ -409,17 +409,17 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
         }
 
         /// <summary>
-        /// Adds the tooltip image from the given command to the ribbon item data
+        /// Adds the tooltip image from the given properties to the ribbon item data
         /// </summary>
         /// <typeparam name="T">The type of the button data</typeparam>
         /// <typeparam name="TCommand">The type of the command</typeparam>
         /// <param name="ribbonItemData">The ribbon item data instance</param>
-        /// <param name="command">The command instance</param>
+        /// <param name="properties">The properties instance</param>
         /// <returns>The button data with the tool tip image added</returns>
         [NotNull]
         public static T WithToolTipImage<T, TCommand>(
             [NotNull] this T ribbonItemData,
-            [NotNull] TCommand command)
+            [NotNull] IRvtCommandProperties<TCommand> properties)
             where T : RibbonItemData
             where TCommand : class, IRvtCommand
         {
@@ -428,12 +428,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
                 throw new ArgumentNullException(nameof(ribbonItemData));
             }
 
-            if (command == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(command));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            return ribbonItemData.WithToolTipImage(command.ToolTipImage);
+            return ribbonItemData.WithToolTipImage(properties.ToolTipImage);
         }
 
         /// <summary>

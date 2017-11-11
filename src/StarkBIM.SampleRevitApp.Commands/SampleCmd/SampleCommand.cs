@@ -25,7 +25,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
     ///     -   Otherwise, the sheet data will be mapped to a DataTable
     ///     -   The DataTable will be written to a CSV file at the path specified earlier
     /// </summary>
-    public class SampleCommand : RvtCommandBase
+    public class SampleCommand : RvtCommandBase<SampleCommand>
     {
         [NotNull]
         private readonly IFilePathSelector _filePathSelector;
@@ -42,27 +42,24 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
         /// <summary>
         ///     Initializes a new instance of the <see cref="SampleCommand" /> class.
         /// </summary>
+        /// <param name="sampleCommandProperties">The command properties</param>
         /// <param name="sheetRetriever">The sheet retriever</param>
         /// <param name="dataTableCreator">The data table creator</param>
         /// <param name="filePathSelector">The file path selector</param>
         /// <param name="dataWriter">The data writer</param>
         public SampleCommand(
+            [NotNull] IRvtCommandProperties<SampleCommand> sampleCommandProperties,
             [NotNull] IElementRetriever sheetRetriever,
             [NotNull] IDataTableCreator dataTableCreator,
             [NotNull] IFilePathSelector filePathSelector,
             [NotNull] IDataWriter dataWriter)
+            : base(sampleCommandProperties)
         {
             _filePathSelector = filePathSelector ?? throw new ArgumentNullException(nameof(filePathSelector));
             _dataWriter = dataWriter ?? throw new ArgumentNullException(nameof(dataWriter));
             _dataTableCreator = dataTableCreator ?? throw new ArgumentNullException(nameof(dataTableCreator));
             _sheetRetriever = sheetRetriever ?? throw new ArgumentNullException(nameof(sheetRetriever));
         }
-
-        /// <inheritdoc />
-        public override string Name { get; } = "Sample";
-
-        /// <inheritdoc />
-        public override string DisplayName { get; } = "Sample Command";
 
         /// <inheritdoc />
         public override RvtCommandResult Run(ExternalCommandData commandData)
@@ -117,7 +114,8 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
 
             return new RvtCommandResult
                 {
-                    RvtResult = ResultEnum.Succeeded
+                    RvtResult = ResultEnum.Succeeded,
+                    Message = $"Successfully wrote data to {path}"
                 };
         }
     }

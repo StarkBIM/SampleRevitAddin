@@ -10,8 +10,8 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Configuration
 
     using JetBrains.Annotations;
 
-    using StarkBIM.SampleRevitApp.Commands.Core;
     using StarkBIM.SampleRevitApp.Commands.SampleCmd;
+    using StarkBIM.SampleRevitApp.RvtAddin.Extensions;
 
     using Module = Autofac.Module;
 
@@ -26,12 +26,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Configuration
             // Use the SampleCommand type to get the StarkBIM.SampleRevitApp.Commands assembly
             Assembly commandAssembly = typeof(SampleCommand).Assembly;
 
-            // Register all types that implement IRvtCommand
-            // AsSelf call registers the command itself, which is what is needed for GenericCommand
-            builder.RegisterAssemblyTypes(commandAssembly).Where(t => typeof(IRvtCommand).IsAssignableFrom(t)).AsSelf();
-
-            // Register all modules in the command assembly, which contain the information needed for each command
-            builder.RegisterAssemblyModules(commandAssembly);
+            builder.RegisterCommandTypesForAssembly(commandAssembly);
         }
     }
 }
