@@ -96,6 +96,11 @@
       <Version>1.1.0-beta004</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\StarkBIM.SampleRevitApp.Helpers\StarkBIM.SampleRevitApp.Helpers.csproj">
+      <Project>{de1a8e8d-b65b-45c9-80b8-048ccde9c501}</Project>
+      <Name>StarkBIM.SampleRevitApp.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

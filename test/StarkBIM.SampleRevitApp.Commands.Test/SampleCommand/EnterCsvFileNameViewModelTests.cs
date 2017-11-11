@@ -5,6 +5,7 @@
 namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reactive.Concurrency;
     using System.Windows.Input;
 
@@ -25,6 +26,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
     /// <remarks>
     /// We cannot test whether the Window.Close calls actually work, but we can test whether the commands are able to be executed
     /// </remarks>
+    [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute", Justification = "Test Class")]
     public class EnterCsvFileNameViewModelTests
     {
         [NotNull]
@@ -36,6 +38,15 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
         public EnterCsvFileNameViewModelTests()
         {
             _mockedPathChecker = new Mock<IValidSaveFilePathChecker>();
+        }
+
+        /// <summary>
+        /// Ensures that the constructor throws an ArgumentNullException when the given argument is null
+        /// </summary>
+        [Fact]
+        public void Constructor_Throws_ArgumentNullException_On_Null_Argument()
+        {
+            Assert.Throws<ArgumentNullException>(() => new EnterCsvFileNameViewModel(null));
         }
 
         /// <summary>

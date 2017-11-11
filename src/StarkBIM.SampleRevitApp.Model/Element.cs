@@ -9,6 +9,8 @@ namespace StarkBIM.SampleRevitApp.Model
 
     using JetBrains.Annotations;
 
+    using StarkBIM.SampleRevitApp.Helpers;
+
     /// <summary>
     /// Class representing a Revit element
     /// </summary>
@@ -50,8 +52,8 @@ namespace StarkBIM.SampleRevitApp.Model
 
             DataRow dataRow = dataTable.NewRow();
 
-            dataRow[nameof(Name)] = Name;
-            dataRow[nameof(UniqueId)] = UniqueId;
+            dataRow[nameof(Name)] = Name.ThrowIfNull();
+            dataRow[nameof(UniqueId)] = UniqueId.ThrowIfNull();
             dataRow[nameof(ElementId)] = ElementId;
 
             return dataRow;
@@ -63,11 +65,6 @@ namespace StarkBIM.SampleRevitApp.Model
         /// <param name="dataTable">The datatable</param>
         protected virtual void CreateMissingDataTableRows([NotNull] DataTable dataTable)
         {
-            if (dataTable == null)
-            {
-                throw new ArgumentNullException(nameof(dataTable));
-            }
-
             if (!dataTable.Columns.Contains(nameof(Name)))
             {
                 dataTable.Columns.Add(nameof(Name));

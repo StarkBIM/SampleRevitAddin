@@ -8,6 +8,8 @@ namespace StarkBIM.SampleRevitApp.Model
 
     using JetBrains.Annotations;
 
+    using StarkBIM.SampleRevitApp.Helpers;
+
     /// <summary>
     ///     Represents a Revit sheet
     /// </summary>
@@ -35,8 +37,8 @@ namespace StarkBIM.SampleRevitApp.Model
         {
             DataRow rowForDataTable = base.CreateRowForDataTable(dataTable);
 
-            rowForDataTable[nameof(Number)] = Number;
-            rowForDataTable[nameof(RevisionName)] = RevisionName;
+            rowForDataTable[nameof(Number)] = Number.ThrowIfNull();
+            rowForDataTable[nameof(RevisionName)] = RevisionName.ThrowIfNull();
 
             return rowForDataTable;
         }

@@ -8,6 +8,8 @@ namespace StarkBIM.SampleRevitApp.Model
 
     using JetBrains.Annotations;
 
+    using StarkBIM.SampleRevitApp.Helpers;
+
     /// <summary>
     /// Represents a view in Revit
     /// </summary>
@@ -24,7 +26,7 @@ namespace StarkBIM.SampleRevitApp.Model
         {
             DataRow rowForDataTable = base.CreateRowForDataTable(dataTable);
 
-            rowForDataTable[nameof(ViewType)] = ViewType;
+            rowForDataTable[nameof(ViewType)] = ViewType.ThrowIfNull();
 
             return rowForDataTable;
         }
