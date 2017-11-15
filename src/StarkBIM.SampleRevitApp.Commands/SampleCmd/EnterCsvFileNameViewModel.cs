@@ -62,7 +62,8 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
                                                        {
                                                            var dialog = new VistaSaveFileDialog
                                                                {
-                                                                   Filter = "CSV Files (*.csv)|*.csv"
+                                                                   Filter = "CSV Files (*.csv)|*.csv",
+                                                                   AddExtension = true
                                                                };
 
                                                            var result = dialog.ShowDialog(window);

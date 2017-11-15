@@ -9,10 +9,9 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
 
     using Autodesk.Revit.DB;
 
-    using AutoMapper;
-
     using JetBrains.Annotations;
 
+    using StarkBIM.SampleRevitApp.Commands.Core;
     using StarkBIM.SampleRevitApp.Model;
 
     using Element = StarkBIM.SampleRevitApp.Model.Element;
@@ -81,7 +80,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         /// <inheritdoc />
         public T Map<T>(object nativeRvtObject)
         {
-            return Mapper.Map<T>(nativeRvtObject);
+            return RvtMapper.Instance.Map<T>(nativeRvtObject);
         }
 
         [NotNull]
