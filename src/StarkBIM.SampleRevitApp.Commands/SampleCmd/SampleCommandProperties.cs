@@ -9,7 +9,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
     /// <summary>
     /// Command Properties for the SampleCommand command
     /// </summary>
-    public class SampleCommandProperties : RvtCommandProperties<SampleCommand>
+    public class SampleCommandProperties : RvtCommandPropertiesBase<SampleCommand>
     {
         /// <inheritdoc />
         public override string Name { get; } = "Sample";

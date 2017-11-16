@@ -128,7 +128,7 @@
     <Compile Include="Core\IRvtCommand.cs" />
     <Compile Include="Core\IRvtCommandProperties.cs" />
     <Compile Include="Core\RvtMapper.cs" />
-    <Compile Include="Core\RvtCommandProperties.cs" />
+    <Compile Include="Core\RvtCommandPropertiesBase.cs" />
     <Compile Include="Core\RvtWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\RvtCommandBase.cs" />

@@ -1,4 +1,4 @@
-﻿// <copyright file="RvtCommandProperties.cs" company="StarkBIM Inc">
+﻿// <copyright file="RvtCommandPropertiesBase.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -12,7 +12,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Core
     /// Base class for implementations of IRvtCommandProperties{TCommand}
     /// </summary>
     /// <typeparam name="TCommand">The type of the command</typeparam>
-    public abstract class RvtCommandProperties<TCommand> : IRvtCommandProperties<TCommand>
+    public abstract class RvtCommandPropertiesBase<TCommand> : IRvtCommandProperties<TCommand>
         where TCommand : class, IRvtCommand
     {
         /// <inheritdoc />
