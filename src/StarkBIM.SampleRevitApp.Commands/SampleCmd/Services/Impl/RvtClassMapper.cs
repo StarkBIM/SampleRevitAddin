@@ -26,20 +26,16 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         private readonly Dictionary<Type, Type> _typeDictionary;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="RvtClassMapper" /> class.
-        /// </summary>
-        /// <param name="configuration">Dictionary containing the type map</param>
-        public RvtClassMapper([NotNull] Dictionary<Type, Type> configuration)
-        {
-            _typeDictionary = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RvtClassMapper"/> class.
         /// </summary>
         public RvtClassMapper()
-            : this(GetDefaultConfiguration())
         {
+            _typeDictionary = new Dictionary<Type, Type>
+                {
+                    { typeof(RvtElement), typeof(Element) },
+                    { typeof(RvtView), typeof(View) },
+                    { typeof(ViewSheet), typeof(Sheet) }
+                };
         }
 
         /// <inheritdoc />
@@ -81,17 +77,6 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         public T Map<T>(object nativeRvtObject)
         {
             return RvtMapper.Instance.Map<T>(nativeRvtObject);
-        }
-
-        [NotNull]
-        private static Dictionary<Type, Type> GetDefaultConfiguration()
-        {
-            return new Dictionary<Type, Type>
-                {
-                    { typeof(RvtElement), typeof(Element) },
-                    { typeof(RvtView), typeof(View) },
-                    { typeof(ViewSheet), typeof(Sheet) }
-                };
         }
     }
 }
