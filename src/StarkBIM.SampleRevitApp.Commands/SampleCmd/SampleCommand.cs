@@ -120,7 +120,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
                     };
             }
 
-            ////_dialogService.ShowDialog("Success", $"Successfully wrote data to {path}");
+            _dialogService.ShowDialog("Success", $"Successfully wrote data to {path}");
 
             return new RvtCommandResult
                 {

@@ -102,7 +102,6 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
             Assert.Equal("Sample Command", _emptySampleCommand.DisplayName);
         }
 
-        /*
         /// <summary>
         /// Ensures that a dialog box with the correct message is shown on success
         /// </summary>
@@ -131,7 +130,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
             sampleCommand.Run(_externalCommandData);
 
             _mockedDialogService.Verify(dialogService => dialogService.ShowDialog("Success", "Successfully wrote data to filepath.csv"), Times.Once);
-        }*/
+        }
 
         /// <summary>
         ///     Ensures the command's internal name is sample
