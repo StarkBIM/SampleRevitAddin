@@ -5,6 +5,7 @@
 namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using Autodesk.Revit.UI;
@@ -28,6 +29,10 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
     public class SampleCommand : RvtCommandBase<SampleCommand>
     {
         [NotNull]
+        [SuppressMessage("ReSharper", "NotAccessedField.Local", Justification = "Temporary")]
+        private readonly IDialogService _dialogService;
+
+        [NotNull]
         private readonly IFilePathSelector _filePathSelector;
 
         [NotNull]
@@ -47,14 +52,17 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
         /// <param name="dataTableCreator">The data table creator</param>
         /// <param name="filePathSelector">The file path selector</param>
         /// <param name="dataWriter">The data writer</param>
+        /// <param name="dialogService">The dialog service</param>
         public SampleCommand(
             [NotNull] IRvtCommandProperties<SampleCommand> sampleCommandProperties,
             [NotNull] IElementRetriever sheetRetriever,
             [NotNull] IDataTableCreator dataTableCreator,
             [NotNull] IFilePathSelector filePathSelector,
-            [NotNull] IDataWriter dataWriter)
+            [NotNull] IDataWriter dataWriter,
+            [NotNull] IDialogService dialogService)
             : base(sampleCommandProperties)
         {
+            _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             _filePathSelector = filePathSelector ?? throw new ArgumentNullException(nameof(filePathSelector));
             _dataWriter = dataWriter ?? throw new ArgumentNullException(nameof(dataWriter));
             _dataTableCreator = dataTableCreator ?? throw new ArgumentNullException(nameof(dataTableCreator));
@@ -111,6 +119,8 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
                         Message = "Writing the file to disk failed"
                     };
             }
+
+            _dialogService.ShowDialog("Success", $"Successfully wrote data to {path}");
 
             return new RvtCommandResult
                 {

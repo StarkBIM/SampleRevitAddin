@@ -96,10 +96,12 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
                 ////_dialogService = _autofacScope.Resolve<IDialogService>();
                 ////_autofacScope.Resolve<ILogService>();
 
-                Mapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
+                // The instance API of AutoMapper is used to avoid conflicts with other addins
+                var mapperConf = new MapperConfiguration(cfg => cfg.AddProfile<ElementProfile>());
+                RvtMapper.Initialize(mapperConf);
 
 #if DEBUG
-                Mapper.AssertConfigurationIsValid();
+                RvtMapper.Instance.ConfigurationProvider.AssertConfigurationIsValid();
 #endif
             }
             catch (Exception e)
@@ -185,10 +187,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
             */
         }
 
-        [SuppressMessage(
-            "ReSharper",
-            "ConstantConditionalAccessQualifier",
-            Justification = "Could potentially be called before the services are initialized")]
+        [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier", Justification = "Could potentially be called before the services are initialized")]
         private static void CurrentDomainOnUnhandledException([NotNull] object sender, [NotNull] UnhandledExceptionEventArgs e)
         {
             ////string programClosing = e.IsTerminating ? "Program is terminating" : "Program is not terminating";
@@ -260,8 +259,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin
                                                     commandProperties.Name,
                                                     commandProperties.DisplayName,
                                                     typeof(GenericCommand<>).Assembly.Location,
-                                                    typeof(GenericCommand<TCommand>).FullName)
-                .SetAllPushButtonDataProperties(commandProperties);
+                                                    typeof(GenericCommand<TCommand>).FullName).SetAllPushButtonDataProperties(commandProperties);
 
             return pushButtonData;
         }

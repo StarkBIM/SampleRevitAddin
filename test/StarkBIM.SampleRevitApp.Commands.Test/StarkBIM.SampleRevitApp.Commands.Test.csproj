@@ -258,6 +258,7 @@
     <Compile Include="SampleCommand\RvtTestSetBase.cs" />
     <Compile Include="SampleCommand\SampleCommandTests.cs" />
     <Compile Include="SampleCommand\SampleCommandTestsRealData.cs" />
+    <Compile Include="SampleCommand\Services\DialogServiceTests.cs" />
     <Compile Include="SampleCommand\Services\ValidSaveFilePathCheckerTests.cs" />
     <Compile Include="SampleCommand\Services\DataTableCreatorTests.cs" />
     <Compile Include="SampleCommand\Services\DataWriterTests.cs" />

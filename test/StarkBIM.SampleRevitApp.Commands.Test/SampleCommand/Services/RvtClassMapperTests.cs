@@ -4,8 +4,6 @@
 
 namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
 {
-    using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
     using Autodesk.Revit.DB;
@@ -74,15 +72,6 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
         [Fact]
         public void RvtClassMapper_RvtSheet_Maps_To_Sheet()
         {
-            Dictionary<Type, Type> typeDictionary = new Dictionary<Type, Type>
-                {
-                    { typeof(RvtElement), typeof(Element) },
-                    { typeof(RvtView), typeof(View) },
-                    { typeof(ViewSheet), typeof(Sheet) }
-                };
-
-            var mapper = new RvtClassMapper(typeDictionary);
-
             const string SheetName = "SheetName";
             const string SheetNumber = "SheetNumber";
             const string RevisionName = "Revision1";
@@ -99,7 +88,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
             // Where multiple parameters need to be retrieved from an element, this would need to be handled in more detail here
             Mock.Arrange(() => sheet.get_Parameter(Arg.IsAny<BuiltInParameter>())).Returns(param);
 
-            Sheet mappedSheet = mapper.Map<Sheet>(sheet);
+            Sheet mappedSheet = _mapper.Map<Sheet>(sheet);
 
             Assert.NotNull(mappedSheet);
             Assert.IsType<Sheet>(mappedSheet);

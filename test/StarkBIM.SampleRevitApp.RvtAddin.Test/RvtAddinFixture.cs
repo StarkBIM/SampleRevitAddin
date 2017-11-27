@@ -7,8 +7,6 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Test
     using System;
     using System.IO;
 
-    using AutoMapper;
-
     using JetBrains.Annotations;
 
     using StarkBIM.SampleRevitApp.Commands.Core;
@@ -43,7 +41,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Test
             AppDomain.CurrentDomain.AssemblyResolve += _assemblyResolver.OnAssemblyResolve;
 
             // Must come after the AssemblyResolve event handler
-            Mapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
+            RvtMapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
         }
 
         /// <summary>

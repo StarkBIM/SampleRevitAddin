@@ -32,6 +32,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
             builder.RegisterType<FilePathSelector>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<RvtClassMapper>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<ValidSaveFilePathChecker>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<DialogService>().AsImplementedInterfaces().SingleInstance();
 
             // For the viewmodel, since it is not implementing an interface, we call AsSelf()
             // We also omit the SingleInstance() call, since a new instance should be created every request

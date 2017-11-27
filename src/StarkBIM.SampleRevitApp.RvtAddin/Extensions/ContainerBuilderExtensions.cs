@@ -38,11 +38,10 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Extensions
 
             // Register all types that implement IRvtCommand
             // AsSelf call registers the command itself, which is what is needed for GenericCommand
-            var registrationBuilder = builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IRvtCommand).IsAssignableFrom(t));
-            registrationBuilder.AsSelf();
+            builder.RegisterAssemblyTypes(assembly).Where(t => typeof(IRvtCommand).IsAssignableFrom(t)).AsSelf();
 
             // Register command properties
-            builder.RegisterAssemblyTypes(assembly).Where(t => t.IsAssignableToGenericType(typeof(RvtCommandProperties<>))).AsSelf().AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(assembly).Where(t => t.IsAssignableToGenericType(typeof(IRvtCommandProperties<>))).AsSelf().AsImplementedInterfaces();
 
             // Register all modules in the command assembly, which contain the information needed for each command
             builder.RegisterAssemblyModules(assembly);
