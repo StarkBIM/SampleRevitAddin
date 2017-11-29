@@ -1,4 +1,4 @@
-﻿// <copyright file="ExceptionUtil.cs" company="StarkBIM Inc">
+// <copyright file="ExceptionUtil.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -33,7 +33,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Util
 
             string additionalData = null;
 
-            StringBuilder additionalStringBuilder = new StringBuilder();
+            var additionalStringBuilder = new StringBuilder();
 
             if (ex.Data.Count > 0)
             {
@@ -51,7 +51,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Util
 
             string exceptionSpecificData = CreateExceptionSpecificData(ex);
 
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
             stringBuilder.AppendLine($"Exception of type: {ex.GetType()}");
             stringBuilder.AppendLine(ex.Message);
@@ -94,7 +94,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Util
         [NotNull]
         private static string CreateExceptionSpecificData([NotNull] Exception ex)
         {
-            StringBuilder exceptionSpecificData = new StringBuilder();
+            var exceptionSpecificData = new StringBuilder();
 
             // ArgumentNullException inherits from ArgumentException, so is included
             if (ex is ArgumentException argumentException)

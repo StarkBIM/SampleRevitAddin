@@ -1,4 +1,4 @@
-﻿// <copyright file="SampleCommandTestsRealData.cs" company="StarkBIM Inc">
+// <copyright file="SampleCommandTestsRealData.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -10,10 +10,6 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
     public class SampleCommandTestsRealData : RvtTestSetBase
     {
         /// <inheritdoc />
-        public override bool IsTestContextValid()
-        {
-            // TBD
-            throw new System.NotImplementedException();
-        }
+        public override bool IsTestContextValid() => throw new System.NotImplementedException();
     }
 }

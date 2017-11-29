@@ -1,4 +1,4 @@
-﻿// <copyright file="RvtClassMapper.cs" company="StarkBIM Inc">
+// <copyright file="RvtClassMapper.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -26,17 +26,15 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         private readonly Dictionary<Type, Type> _typeDictionary;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RvtClassMapper"/> class.
+        ///     Initializes a new instance of the <see cref="RvtClassMapper" /> class.
         /// </summary>
-        public RvtClassMapper()
-        {
+        public RvtClassMapper() =>
             _typeDictionary = new Dictionary<Type, Type>
-                {
-                    { typeof(RvtElement), typeof(Element) },
-                    { typeof(RvtView), typeof(View) },
-                    { typeof(ViewSheet), typeof(Sheet) }
-                };
-        }
+            {
+                { typeof(RvtElement), typeof(Element) },
+                { typeof(RvtView), typeof(View) },
+                { typeof(ViewSheet), typeof(Sheet) }
+            };
 
         /// <inheritdoc />
         public Type GetMappedType<TRvt>()
@@ -74,9 +72,6 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         }
 
         /// <inheritdoc />
-        public T Map<T>(object nativeRvtObject)
-        {
-            return RvtMapper.Instance.Map<T>(nativeRvtObject);
-        }
+        public T Map<T>(object nativeRvtObject) => RvtMapper.Instance.Map<T>(nativeRvtObject);
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="EnterCsvFileNameWindow.xaml.cs" company="StarkBIM Inc">
+// <copyright file="EnterCsvFileNameWindow.xaml.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -12,9 +12,6 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd
         /// <summary>
         /// Initializes a new instance of the <see cref="EnterCsvFileNameWindow"/> class.
         /// </summary>
-        public EnterCsvFileNameWindow()
-        {
-            InitializeComponent();
-        }
+        public EnterCsvFileNameWindow() => InitializeComponent();
     }
 }

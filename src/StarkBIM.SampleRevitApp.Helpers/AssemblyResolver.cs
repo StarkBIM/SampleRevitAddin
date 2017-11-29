@@ -1,4 +1,4 @@
-﻿// <copyright file="AssemblyResolver.cs" company="StarkBIM Inc">
+// <copyright file="AssemblyResolver.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -118,7 +118,7 @@ namespace StarkBIM.SampleRevitApp.Helpers
 
             try
             {
-                Assembly assembly = Assembly.LoadFrom(path);
+                var assembly = Assembly.LoadFrom(path);
 
                 return string.Equals(
                                      GetAssemblyNameFromFullName(assembly.FullName),

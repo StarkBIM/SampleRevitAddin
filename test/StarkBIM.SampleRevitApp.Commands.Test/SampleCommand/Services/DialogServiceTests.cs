@@ -1,4 +1,4 @@
-﻿// <copyright file="DialogServiceTests.cs" company="StarkBIM Inc">
+// <copyright file="DialogServiceTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -17,15 +17,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
     public class DialogServiceTests : IAssemblyFixture<CommandsFixture>
     {
         [NotNull]
-        private readonly DialogService _dialogService;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DialogServiceTests"/> class.
-        /// </summary>
-        public DialogServiceTests()
-        {
-            _dialogService = new DialogService();
-        }
+        private readonly DialogService _dialogService = new DialogService();
 
         /// <summary>
         ///     Ensures that the ShowDialog method throws an ArgumentException when the message is null or white space

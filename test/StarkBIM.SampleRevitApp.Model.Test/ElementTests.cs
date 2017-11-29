@@ -1,4 +1,4 @@
-﻿// <copyright file="ElementTests.cs" company="StarkBIM Inc">
+// <copyright file="ElementTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -19,20 +19,12 @@ namespace StarkBIM.SampleRevitApp.Model.Test
     public class ElementTests
     {
         [NotNull]
-        private readonly Element _element;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ElementTests"/> class.
-        /// </summary>
-        public ElementTests()
+        private readonly Element _element = new Element
         {
-            _element = new Element
-                {
-                    Name = "Element1",
-                    ElementId = 1,
-                    UniqueId = "1"
-                };
-        }
+            Name = "Element1",
+            ElementId = 1,
+            UniqueId = "1"
+        };
 
         /// <summary>
         /// Ensures that ArgumentNullException is thrown when GetRowForDataTable is passed a null DataTable

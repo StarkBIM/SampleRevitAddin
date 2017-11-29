@@ -1,4 +1,4 @@
-﻿// <copyright file="DataTableCreatorTests.cs" company="StarkBIM Inc">
+// <copyright file="DataTableCreatorTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -26,15 +26,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
     public class DataTableCreatorTests
     {
         [NotNull]
-        private readonly DataTableCreator _dataTableCreator;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DataTableCreatorTests" /> class.
-        /// </summary>
-        public DataTableCreatorTests()
-        {
-            _dataTableCreator = new DataTableCreator();
-        }
+        private readonly DataTableCreator _dataTableCreator = new DataTableCreator();
 
         /// <summary>
         ///     Ensures that the returned datatable contains one row per element
@@ -55,14 +47,14 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
             element1.Name = "Element1";
             element1.ElementId = 1;
             element1.UniqueId = "1";
-            Mock<Element> mockElement1 = Mock.Get(element1);
+            var mockElement1 = Mock.Get(element1);
             SetupMock(mockElement1, dataTable);
 
             var element2 = Mock.Of<Element>();
             element2.Name = "Element2";
             element2.ElementId = 2;
             element2.UniqueId = "2";
-            Mock<Element> mockElement2 = Mock.Get(element2);
+            var mockElement2 = Mock.Get(element2);
             SetupMock(mockElement2, dataTable);
 
             var view1 = Mock.Of<View>();
@@ -70,7 +62,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
             view1.ElementId = 3;
             view1.UniqueId = "3";
             view1.ViewType = "Plan";
-            Mock<View> mockView1 = Mock.Get(view1);
+            var mockView1 = Mock.Get(view1);
             SetupMock(mockView1, dataTable);
 
             var view2 = Mock.Of<View>();
@@ -78,7 +70,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
             view2.ElementId = 4;
             view2.UniqueId = "4";
             view2.ViewType = "Section";
-            Mock<View> mockView2 = Mock.Get(view2);
+            var mockView2 = Mock.Get(view2);
             SetupMock(mockView2, dataTable);
 
             var sheet1 = Mock.Of<Sheet>();
@@ -87,7 +79,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
             sheet1.UniqueId = "5";
             sheet1.Number = "1";
             sheet1.RevisionName = null;
-            Mock<Sheet> mockSheet1 = Mock.Get(sheet1);
+            var mockSheet1 = Mock.Get(sheet1);
             SetupMock(mockSheet1, dataTable);
 
             var sheet2 = Mock.Of<Sheet>();
@@ -96,7 +88,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
             sheet2.UniqueId = "6";
             sheet2.Number = "2";
             sheet2.RevisionName = "Revision1";
-            Mock<Sheet> mockSheet2 = Mock.Get(sheet2);
+            var mockSheet2 = Mock.Get(sheet2);
             SetupMock(mockSheet2, dataTable);
 
             var elementList = new List<Element>
@@ -131,10 +123,8 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
         ///     Ensures that ArgumentNullException is thrown when CreateDataTable is passed null
         /// </summary>
         [Fact]
-        public void CreateDataTable_Throws_ArgumentNullException_On_Null_Argument()
-        {
+        public void CreateDataTable_Throws_ArgumentNullException_On_Null_Argument() =>
             Assert.Throws<ArgumentNullException>(() => _dataTableCreator.CreateDataTable(null));
-        }
 
         [NotNull]
         private static DataRow CreateRowForElement([NotNull] DataTable dataTable, [NotNull] Element element)

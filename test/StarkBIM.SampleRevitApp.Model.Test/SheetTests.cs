@@ -1,4 +1,4 @@
-﻿// <copyright file="SheetTests.cs" company="StarkBIM Inc">
+// <copyright file="SheetTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -19,31 +19,21 @@ namespace StarkBIM.SampleRevitApp.Model.Test
     public class SheetTests
     {
         [NotNull]
-        private readonly Sheet _sheet;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SheetTests"/> class.
-        /// </summary>
-        public SheetTests()
+        private readonly Sheet _sheet = new Sheet
         {
-            _sheet = new Sheet
-                {
-                    Name = "Sheet1",
-                    ElementId = 1,
-                    UniqueId = "1",
-                    Number = "1",
-                    RevisionName = "Revision1"
-                };
-        }
+            Name = "Sheet1",
+            ElementId = 1,
+            UniqueId = "1",
+            Number = "1",
+            RevisionName = "Revision1"
+        };
 
         /// <summary>
         /// Ensures that ArgumentNullException is thrown when GetRowForDataTable is passed a null DataTable
         /// </summary>
         [Fact]
-        public void CreateRowForDataTable_Throws_ArgumentNullException_On_Null_DataTable()
-        {
+        public void CreateRowForDataTable_Throws_ArgumentNullException_On_Null_DataTable() =>
             Assert.Throws<ArgumentNullException>(() => _sheet.CreateRowForDataTable(null));
-        }
 
         /// <summary>
         /// Ensure that the columns on the datatable are correctly created

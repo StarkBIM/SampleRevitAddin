@@ -1,4 +1,4 @@
-﻿// <copyright file="ElementRetrieverTests.cs" company="StarkBIM Inc">
+// <copyright file="ElementRetrieverTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -34,20 +34,10 @@ namespace StarkBIM.SampleRevitApp.Commands.JustMock.Test.SampleCommand.Services
     public class ElementRetrieverTests
     {
         [NotNull]
-        private readonly Mock<IElementCollector> _mockElementCollector;
+        private readonly Mock<IElementCollector> _mockElementCollector = new Mock<IElementCollector>();
 
         [NotNull]
-        private readonly Mock<IRvtClassMapper> _mockClassMapper;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ElementRetrieverTests"/> class.
-        /// </summary>
-        public ElementRetrieverTests()
-        {
-            _mockElementCollector = new Mock<IElementCollector>();
-
-            _mockClassMapper = new Mock<IRvtClassMapper>();
-        }
+        private readonly Mock<IRvtClassMapper> _mockClassMapper = new Mock<IRvtClassMapper>();
 
         /// <summary>
         /// Ensures that one sheet is returned for every Revit sheet. Mapping is handled by RvtClassMapper so the testing for correct mapping is done there

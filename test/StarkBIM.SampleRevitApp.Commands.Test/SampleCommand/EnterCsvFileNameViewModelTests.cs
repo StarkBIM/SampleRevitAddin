@@ -1,4 +1,4 @@
-﻿// <copyright file="EnterCsvFileNameViewModelTests.cs" company="StarkBIM Inc">
+// <copyright file="EnterCsvFileNameViewModelTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -30,24 +30,13 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
     public class EnterCsvFileNameViewModelTests
     {
         [NotNull]
-        private readonly Mock<IValidSaveFilePathChecker> _mockedPathChecker;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EnterCsvFileNameViewModelTests"/> class.
-        /// </summary>
-        public EnterCsvFileNameViewModelTests()
-        {
-            _mockedPathChecker = new Mock<IValidSaveFilePathChecker>();
-        }
+        private readonly Mock<IValidSaveFilePathChecker> _mockedPathChecker = new Mock<IValidSaveFilePathChecker>();
 
         /// <summary>
         /// Ensures that the constructor throws an ArgumentNullException when the given argument is null
         /// </summary>
         [Fact]
-        public void Constructor_Throws_ArgumentNullException_On_Null_Argument()
-        {
-            Assert.Throws<ArgumentNullException>(() => new EnterCsvFileNameViewModel(null));
-        }
+        public void Constructor_Throws_ArgumentNullException_On_Null_Argument() => Assert.Throws<ArgumentNullException>(() => new EnterCsvFileNameViewModel(null));
 
         /// <summary>
         /// Ensures that the OK command can execute when the file path is valid

@@ -1,4 +1,4 @@
-﻿// <copyright file="RvtClassMapperStub.cs" company="StarkBIM Inc">
+// <copyright file="RvtClassMapperStub.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -13,27 +13,15 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
     public class RvtClassMapperStub : IRvtClassMapper
     {
         /// <inheritdoc />
-        public Type GetMappedType<TRvt>()
-        {
-            throw new NotImplementedException();
-        }
+        public Type GetMappedType<TRvt>() => throw new NotImplementedException();
 
         /// <inheritdoc />
-        public Type GetMappedType(Type type)
-        {
-            throw new NotImplementedException();
-        }
+        public Type GetMappedType(Type type) => throw new NotImplementedException();
 
         /// <inheritdoc />
-        public Type GetMappedType<TRvt>(TRvt rvtObject)
-        {
-            throw new NotImplementedException();
-        }
+        public Type GetMappedType<TRvt>(TRvt rvtObject) => throw new NotImplementedException();
 
         /// <inheritdoc />
-        public T Map<T>(object nativeRvtObject)
-        {
-            throw new NotImplementedException();
-        }
+        public T Map<T>(object nativeRvtObject) => throw new NotImplementedException();
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="Extensions.cs" company="StarkBIM Inc">
+// <copyright file="Extensions.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -81,10 +81,7 @@ namespace StarkBIM.SampleRevitApp.Helpers
         /// <param name="item">The object</param>
         /// <returns>True if null, otherwise false</returns>
         [ContractAnnotation("null=>true;notnull=>false;")]
-        public static bool IsNull([CanBeNull] this object item)
-        {
-            return item == null;
-        }
+        public static bool IsNull([CanBeNull] this object item) => item == null;
 
         /// <summary>
         ///     Extension method to check is a string is null or whitespace
@@ -92,9 +89,6 @@ namespace StarkBIM.SampleRevitApp.Helpers
         /// <param name="str">The string</param>
         /// <returns>True if null or whitespace, otherwise false</returns>
         [ContractAnnotation("null => true")]
-        public static bool IsNullOrWhiteSpace([CanBeNull] this string str)
-        {
-            return string.IsNullOrWhiteSpace(str);
-        }
+        public static bool IsNullOrWhiteSpace([CanBeNull] this string str) => string.IsNullOrWhiteSpace(str);
     }
 }

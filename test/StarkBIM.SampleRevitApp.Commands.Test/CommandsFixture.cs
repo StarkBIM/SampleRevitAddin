@@ -1,4 +1,4 @@
-﻿// <copyright file="CommandsFixture.cs" company="StarkBIM Inc">
+// <copyright file="CommandsFixture.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -46,10 +46,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test
         /// <summary>
         ///     Finalizes an instance of the <see cref="CommandsFixture" /> class.
         /// </summary>
-        ~CommandsFixture()
-        {
-            Dispose(false);
-        }
+        ~CommandsFixture() => Dispose(false);
 
         /// <inheritdoc />
         public void Dispose()

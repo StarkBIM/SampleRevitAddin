@@ -1,4 +1,4 @@
-﻿// <copyright file="DataWriter.cs" company="StarkBIM Inc">
+// <copyright file="DataWriter.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -24,10 +24,8 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         /// Initializes a new instance of the <see cref="DataWriter"/> class.
         /// </summary>
         /// <param name="validSaveFilePathChecker">Valid save file path checker</param>
-        public DataWriter([NotNull] IValidSaveFilePathChecker validSaveFilePathChecker)
-        {
+        public DataWriter([NotNull] IValidSaveFilePathChecker validSaveFilePathChecker) =>
             _validSaveFilePathChecker = validSaveFilePathChecker ?? throw new ArgumentNullException(nameof(validSaveFilePathChecker));
-        }
 
         /// <inheritdoc />
         public bool WriteDataToFile(DataTable dataTable, string filePath)

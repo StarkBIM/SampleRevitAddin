@@ -1,4 +1,4 @@
-﻿// <copyright file="SampleCommandTests.cs" company="StarkBIM Inc">
+// <copyright file="SampleCommandTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -71,30 +71,21 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
         ///     Ensures the command's display name is Sample Command
         /// </summary>
         [Fact]
-        public void SampleCommand_DisplayName_Is_Sample_Command()
-        {
-            Assert.Equal("Sample Command", _emptySampleCommand.DisplayName);
-        }
+        public void SampleCommand_DisplayName_Is_Sample_Command() => Assert.Equal("Sample Command", _emptySampleCommand.DisplayName);
 
         /// <summary>
         ///     Ensures the command's internal name is sample
         /// </summary>
         [Fact]
-        public void SampleCommand_Name_Is_Sample()
-        {
-            Assert.Equal("Sample", _emptySampleCommand.Name);
-        }
+        public void SampleCommand_Name_Is_Sample() => Assert.Equal("Sample", _emptySampleCommand.Name);
 
         [NotNull]
-        private SampleCommand GetTestSampleCommand()
-        {
-            return new SampleCommand(
-                                     _mockedSampleProperties.Object,
-                                     _mockedSheetRetriever.Object,
-                                     _mockedDataTableCreator.Object,
-                                     _mockedFilePathSelector.Object,
-                                     _mockedDataWriter.Object,
-                                     _mockedDialogService.Object);
-        }
+        private SampleCommand GetTestSampleCommand() => new SampleCommand(
+                                                                          _mockedSampleProperties.Object,
+                                                                          _mockedSheetRetriever.Object,
+                                                                          _mockedDataTableCreator.Object,
+                                                                          _mockedFilePathSelector.Object,
+                                                                          _mockedDataWriter.Object,
+                                                                          _mockedDialogService.Object);
     }
 }

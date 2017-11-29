@@ -1,4 +1,4 @@
-﻿// <copyright file="DataWriterTests.cs" company="StarkBIM Inc">
+// <copyright file="DataWriterTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -28,24 +28,13 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
     public class DataWriterTests
     {
         [NotNull]
-        private readonly Mock<IValidSaveFilePathChecker> _mockPathChecker;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="DataWriterTests" /> class.
-        /// </summary>
-        public DataWriterTests()
-        {
-            _mockPathChecker = new Mock<IValidSaveFilePathChecker>();
-        }
+        private readonly Mock<IValidSaveFilePathChecker> _mockPathChecker = new Mock<IValidSaveFilePathChecker>();
 
         /// <summary>
         ///     Ensures that the constructor throws an ArgumentNullException when passed a null argument
         /// </summary>
         [Fact]
-        public void Constructor_Throws_ArgumentNullException_On_Null_Argument()
-        {
-            Assert.Throws<ArgumentNullException>(() => new DataWriter(null));
-        }
+        public void Constructor_Throws_ArgumentNullException_On_Null_Argument() => Assert.Throws<ArgumentNullException>(() => new DataWriter(null));
 
         /// <summary>
         /// Ensures that WriteDataFile returns false when the datatable has no columns

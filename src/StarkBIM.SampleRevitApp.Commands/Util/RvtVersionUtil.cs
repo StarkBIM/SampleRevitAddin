@@ -1,14 +1,17 @@
-﻿// <copyright file="RvtVersionUtil.cs" company="StarkBIM Inc">
+// <copyright file="RvtVersionUtil.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
 namespace StarkBIM.SampleRevitApp.Commands.Util
 {
+    using System.Diagnostics.CodeAnalysis;
+
     using JetBrains.Annotations;
 
     /// <summary>
     /// Helper methods for Revit version-specific functions
     /// </summary>
+    [SuppressMessage("Style", "IDE0022:Use expression body for methods", Justification = "Conditional compilation symbols")]
     public static class RvtVersionUtil
     {
         /// <summary>

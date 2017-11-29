@@ -1,4 +1,4 @@
-﻿// <copyright file="ElementCollectorTests.cs" company="StarkBIM Inc">
+// <copyright file="ElementCollectorTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -24,32 +24,18 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
     public class ElementCollectorTests : IAssemblyFixture<CommandsFixture>
     {
         [NotNull]
-        private readonly ElementCollector _elementCollector;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ElementCollectorTests"/> class.
-        /// </summary>
-        public ElementCollectorTests()
-        {
-            _elementCollector = new ElementCollector();
-        }
+        private readonly ElementCollector _elementCollector = new ElementCollector();
 
         /// <summary>
         /// Ensures that an ArgumentNullException is thrown when a null document is passed to GetSheets
         /// </summary>
         [Fact]
-        public void GetSheets_Throws_ArgumentNullException_On_Empty_Document()
-        {
-            Assert.Throws<ArgumentNullException>(() => _elementCollector.GetSheets(null));
-        }
+        public void GetSheets_Throws_ArgumentNullException_On_Empty_Document() => Assert.Throws<ArgumentNullException>(() => _elementCollector.GetSheets(null));
 
         /// <summary>
         /// Ensures that an ArgumentNullException is thrown when a null document is passed to GetViews
         /// </summary>
         [Fact]
-        public void GetViews_Throws_ArgumentNullException_On_Empty_Document()
-        {
-            Assert.Throws<ArgumentNullException>(() => _elementCollector.GetViews(null));
-        }
+        public void GetViews_Throws_ArgumentNullException_On_Empty_Document() => Assert.Throws<ArgumentNullException>(() => _elementCollector.GetViews(null));
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="FilePathSelector.cs" company="StarkBIM Inc">
+// <copyright file="FilePathSelector.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -23,10 +23,8 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         /// Initializes a new instance of the <see cref="FilePathSelector"/> class.
         /// </summary>
         /// <param name="validSaveFilePathChecker">The valid save file checker</param>
-        public FilePathSelector([NotNull] IValidSaveFilePathChecker validSaveFilePathChecker)
-        {
+        public FilePathSelector([NotNull] IValidSaveFilePathChecker validSaveFilePathChecker) =>
             _validSaveFilePathChecker = validSaveFilePathChecker ?? throw new ArgumentNullException(nameof(validSaveFilePathChecker));
-        }
 
         /// <inheritdoc />
         public string SelectFilePath()

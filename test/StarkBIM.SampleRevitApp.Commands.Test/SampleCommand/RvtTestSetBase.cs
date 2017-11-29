@@ -1,4 +1,4 @@
-﻿// <copyright file="RvtTestSetBase.cs" company="StarkBIM Inc">
+// <copyright file="RvtTestSetBase.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -18,17 +18,9 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
     /// </summary>
     public abstract class RvtTestSetBase
     {
+        // Need to get the CommandData from the Test Runner
         [NotNull]
-        private readonly ExternalCommandData _commandData;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="RvtTestSetBase" /> class.
-        /// </summary>
-        protected RvtTestSetBase()
-        {
-            // Need to get the CommandData from the Test Runner
-            _commandData = RunnerCommand.CommandData.ThrowIfNull();
-        }
+        private readonly ExternalCommandData _commandData = RunnerCommand.CommandData.ThrowIfNull();
 
         /// <summary>
         ///     Checks that the current context is valid for the given tests

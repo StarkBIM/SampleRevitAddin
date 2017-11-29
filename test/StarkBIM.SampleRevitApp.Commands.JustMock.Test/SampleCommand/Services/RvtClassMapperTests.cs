@@ -1,4 +1,4 @@
-﻿// <copyright file="RvtClassMapperTests.cs" company="StarkBIM Inc">
+// <copyright file="RvtClassMapperTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -28,15 +28,7 @@ namespace StarkBIM.SampleRevitApp.Commands.JustMock.Test.SampleCommand.Services
     public sealed class RvtClassMapperTests : IAssemblyFixture<CommandsFixture>
     {
         [NotNull]
-        private readonly RvtClassMapper _mapper;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="RvtClassMapperTests" /> class.
-        /// </summary>
-        public RvtClassMapperTests()
-        {
-            _mapper = new RvtClassMapper();
-        }
+        private readonly RvtClassMapper _mapper = new RvtClassMapper();
 
         /// <summary>
         ///     Checks that a Revit sheet maps correctly to a Sheet

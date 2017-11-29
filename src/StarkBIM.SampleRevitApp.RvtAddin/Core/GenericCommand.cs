@@ -1,4 +1,4 @@
-﻿// <copyright file="GenericCommand.cs" company="StarkBIM Inc">
+// <copyright file="GenericCommand.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -140,7 +140,7 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Core
 
             try
             {
-                Assembly loadFile = Assembly.LoadFile(lastModifiedMatchingFile.FullName);
+                var loadFile = Assembly.LoadFile(lastModifiedMatchingFile.FullName);
                 return loadFile;
             }
             catch (Exception e)

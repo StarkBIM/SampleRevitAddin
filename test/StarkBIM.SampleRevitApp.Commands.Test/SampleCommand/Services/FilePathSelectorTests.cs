@@ -1,4 +1,4 @@
-﻿// <copyright file="FilePathSelectorTests.cs" company="StarkBIM Inc">
+// <copyright file="FilePathSelectorTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -21,9 +21,7 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
         /// Ensures that ArgumentNullException is thrown when the constructor is given a null argument
         /// </summary>
         [Fact]
-        public void Constructor_Throws_ArgumentNullException_On_Null_Argument()
-        {
+        public void Constructor_Throws_ArgumentNullException_On_Null_Argument() =>
             Assert.Throws<ArgumentNullException>(() => new FilePathSelector(null));
-        }
     }
 }

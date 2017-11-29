@@ -1,4 +1,4 @@
-﻿// <copyright file="DataTableCreator.cs" company="StarkBIM Inc">
+// <copyright file="DataTableCreator.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -34,7 +34,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
                 return dataTable;
             }
 
-            IEnumerable<DataRow> dataRows = elementList.Select(e => e.CreateRowForDataTable(dataTable));
+            var dataRows = elementList.Select(e => e.CreateRowForDataTable(dataTable));
 
             foreach (DataRow dataRow in dataRows)
             {

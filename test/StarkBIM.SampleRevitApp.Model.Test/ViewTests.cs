@@ -1,4 +1,4 @@
-﻿// <copyright file="ViewTests.cs" company="StarkBIM Inc">
+// <copyright file="ViewTests.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
@@ -13,39 +13,22 @@ namespace StarkBIM.SampleRevitApp.Model.Test
     using Xunit;
 
     /// <summary>
-    /// Tests for the view class
+    ///     Tests for the view class
     /// </summary>
     [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute", Justification = "Test methods")]
     public class ViewTests
     {
         [NotNull]
-        private readonly View _view;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ViewTests"/> class.
-        /// </summary>
-        public ViewTests()
+        private readonly View _view = new View
         {
-            _view = new View
-                {
-                    Name = "View1",
-                    ElementId = 1,
-                    UniqueId = "1",
-                    ViewType = "ViewType1"
-                };
-        }
+            Name = "View1",
+            ElementId = 1,
+            UniqueId = "1",
+            ViewType = "ViewType1"
+        };
 
         /// <summary>
-        /// Ensures that ArgumentNullException is thrown when GetRowForDataTable is passed a null DataTable
-        /// </summary>
-        [Fact]
-        public void CreateRowForDataTable_Throws_ArgumentNullException_On_Null_DataTable()
-        {
-            Assert.Throws<ArgumentNullException>(() => _view.CreateRowForDataTable(null));
-        }
-
-        /// <summary>
-        /// Ensure that the columns on the datatable are correctly created
+        ///     Ensure that the columns on the datatable are correctly created
         /// </summary>
         [Fact]
         public void CreateRowForDataTable_Columns_Created_Correctly()
@@ -63,7 +46,7 @@ namespace StarkBIM.SampleRevitApp.Model.Test
         }
 
         /// <summary>
-        /// Ensure that the data in the row is correct
+        ///     Ensure that the data in the row is correct
         /// </summary>
         [Fact]
         public void CreateRowForDataTable_Row_Is_Created_Correctly()
@@ -79,5 +62,12 @@ namespace StarkBIM.SampleRevitApp.Model.Test
             Assert.Equal($"{_view.ElementId}", row[nameof(View.ElementId)]);
             Assert.Equal(_view.ViewType, row[nameof(View.ViewType)]);
         }
+
+        /// <summary>
+        ///     Ensures that ArgumentNullException is thrown when GetRowForDataTable is passed a null DataTable
+        /// </summary>
+        [Fact]
+        public void CreateRowForDataTable_Throws_ArgumentNullException_On_Null_DataTable() =>
+            Assert.Throws<ArgumentNullException>(() => _view.CreateRowForDataTable(null));
     }
 }
