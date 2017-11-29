@@ -124,6 +124,17 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
     // The method below is an attempt to use a new free, open source library called Pose
     // However, a BadImageFormatException is always thrown by the DynamicInvoke method
     // This library is very new, so an attempt to get it to work will be made at a later date
+    // ***
+    // Update 2017/11/29 - Pose version 1.10
+    // Verdict: Abandon attempts with Pose until it provides mocking capabilities for Revit API classes
+    // Next steps: Try TypeMock Initialize to see if it works, then decide between JustMock and that
+    // Remarks:
+    // Still receive BadImageFormatException with code listed below.
+    // However, problem is suspected to be with other libraries and not with the Revit API
+    // A 64-bit version of AutoMapper was tested, and did not resolve the issue. Replacing all NuGet packages with 64-bit versions is not feasible
+    // A small test replacing the functionality of TaskDialog.Show worked correctly, indicating that the error did not occur when loading Revit API DLLs
+    // Pose also does not provide any mocking capability for Revit API objects, and there is no indication that this will be added later
+    // Is.A<Type> returns null, but Pose's shimming capabilities require an instantiated object to work
     /*
     /// <summary>
     /// Checks that a Revit sheet maps correctly to a Sheet
