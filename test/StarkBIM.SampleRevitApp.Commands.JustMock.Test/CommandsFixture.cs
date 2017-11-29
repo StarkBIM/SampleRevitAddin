@@ -1,8 +1,8 @@
-﻿// <copyright file="RvtAddinFixture.cs" company="StarkBIM Inc">
+﻿// <copyright file="CommandsFixture.cs" company="StarkBIM Inc">
 // Copyright (c) StarkBIM Inc. All rights reserved.
 // </copyright>
 
-namespace StarkBIM.SampleRevitApp.RvtAddin.Test
+namespace StarkBIM.SampleRevitApp.Commands.JustMock.Test
 {
     using System;
     using System.IO;
@@ -16,15 +16,15 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Test
     /// <summary>
     ///     Fixture that sets up the assembly resolve event to find Revit assemblies
     /// </summary>
-    public sealed class RvtAddinFixture : IDisposable
+    public sealed class CommandsFixture : IDisposable
     {
         [NotNull]
         private readonly AssemblyResolver _assemblyResolver;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="RvtAddinFixture" /> class.
+        ///     Initializes a new instance of the <see cref="CommandsFixture" /> class.
         /// </summary>
-        public RvtAddinFixture()
+        public CommandsFixture()
         {
             string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
@@ -40,14 +40,13 @@ namespace StarkBIM.SampleRevitApp.RvtAddin.Test
 
             AppDomain.CurrentDomain.AssemblyResolve += _assemblyResolver.OnAssemblyResolve;
 
-            // Must come after the AssemblyResolve event handler
             RvtMapper.Initialize(cfg => cfg.AddProfile<ElementProfile>());
         }
 
         /// <summary>
-        ///     Finalizes an instance of the <see cref="RvtAddinFixture" /> class.
+        ///     Finalizes an instance of the <see cref="CommandsFixture" /> class.
         /// </summary>
-        ~RvtAddinFixture()
+        ~CommandsFixture()
         {
             Dispose(false);
         }

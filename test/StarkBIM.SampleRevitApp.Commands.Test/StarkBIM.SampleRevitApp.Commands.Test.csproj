@@ -122,9 +122,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Telerik.JustMock">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Progress\Telerik JustMock\Libraries\Telerik.JustMock.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="RevitAPI" Condition=" '$(Configuration)' == '2015' ">
@@ -271,6 +268,9 @@
     <PackageReference Include="Autofac">
       <Version>4.6.2</Version>
     </PackageReference>
+    <PackageReference Include="AutoMapper">
+      <Version>6.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Config.Net">
       <Version>4.1.0</Version>
     </PackageReference>
@@ -339,17 +339,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="TelerikCodeWeaverProfilerLib">
-      <Guid>{DC2D6321-28A9-4AB0-92FC-EBA40D6FF48F}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

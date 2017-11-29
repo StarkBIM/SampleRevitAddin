@@ -5,10 +5,7 @@
 namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-
-    using Autodesk.Revit.DB;
 
     using JetBrains.Annotations;
 
@@ -16,14 +13,8 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
 
     using StarkBIM.SampleRevitApp.Commands.SampleCmd.Services;
     using StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl;
-    using StarkBIM.SampleRevitApp.Model;
 
     using Xunit;
-
-    using JustMock = Telerik.JustMock.Mock;
-
-    using RvtView = Autodesk.Revit.DB.View;
-    using View = StarkBIM.SampleRevitApp.Model.View;
 
     /// <summary>
     /// Tests for the ElementRetriever class
@@ -81,56 +72,6 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand.Services
         public void GetViews_Throws_ArgumentNullException_On_Null_Document()
         {
             Assert.Throws<ArgumentNullException>(() => new ElementRetriever(_mockElementCollector.Object, _mockClassMapper.Object).GetViews(null));
-        }
-
-        /// <summary>
-        /// Ensures that one sheet is returned for every Revit sheet. Mapping is handled by RvtClassMapper so the testing for correct mapping is done there
-        /// </summary>
-        [Fact]
-        public void GetSheets_All_Retrieved_Sheets_Are_Returned()
-        {
-            var sheetList = new List<ViewSheet>
-                {
-                    JustMock.Create<ViewSheet>(),
-                    JustMock.Create<ViewSheet>(),
-                    JustMock.Create<ViewSheet>()
-                };
-
-            _mockElementCollector.Setup(coll => coll.GetSheets(It.IsAny<Document>())).Returns(sheetList);
-
-            _mockClassMapper.Setup(map => map.Map<Sheet>(It.IsAny<ViewSheet>())).Returns(Mock.Of<Sheet>());
-
-            var elementRetriever = new ElementRetriever(_mockElementCollector.Object, _mockClassMapper.Object);
-
-            ICollection<Sheet> sheets = elementRetriever.GetSheets(JustMock.Create<Document>());
-
-            Assert.NotNull(sheets);
-            Assert.Equal(sheetList.Count, sheets.Count);
-        }
-
-        /// <summary>
-        /// Ensures that one sheet is returned for every Revit sheet. Mapping is handled by RvtClassMapper so the testing for correct mapping is done there
-        /// </summary>
-        [Fact]
-        public void GetViews_All_Retrieved_Views_Are_Returned()
-        {
-            var viewList = new List<RvtView>
-                {
-                    JustMock.Create<RvtView>(),
-                    JustMock.Create<RvtView>(),
-                    JustMock.Create<RvtView>()
-                };
-
-            _mockElementCollector.Setup(coll => coll.GetViews(It.IsAny<Document>())).Returns(viewList);
-
-            _mockClassMapper.Setup(map => map.Map<View>(It.IsAny<RvtView>())).Returns(Mock.Of<View>());
-
-            var elementRetriever = new ElementRetriever(_mockElementCollector.Object, _mockClassMapper.Object);
-
-            ICollection<View> views = elementRetriever.GetViews(JustMock.Create<Document>());
-
-            Assert.NotNull(views);
-            Assert.Equal(viewList.Count, views.Count);
         }
     }
 }
