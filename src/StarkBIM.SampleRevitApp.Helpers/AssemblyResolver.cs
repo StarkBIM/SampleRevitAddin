@@ -108,7 +108,7 @@ namespace StarkBIM.SampleRevitApp.Helpers
 
             if (!File.Exists(path))
             {
-                // Rare, but some assemblies (e.g. old PDFCreator versions) are contained in the exe
+                // Rare, but some assemblies are contained in the exe
                 path = Path.Combine(directoryName, assemblyName + ".exe");
                 if (!File.Exists(path))
                 {
