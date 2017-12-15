@@ -7,6 +7,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
     using System;
     using System.Data;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
 
@@ -24,6 +25,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         /// Initializes a new instance of the <see cref="DataWriter"/> class.
         /// </summary>
         /// <param name="validSaveFilePathChecker">Valid save file path checker</param>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Analyzer bug")]
         public DataWriter([NotNull] IValidSaveFilePathChecker validSaveFilePathChecker) =>
             _validSaveFilePathChecker = validSaveFilePathChecker ?? throw new ArgumentNullException(nameof(validSaveFilePathChecker));
 

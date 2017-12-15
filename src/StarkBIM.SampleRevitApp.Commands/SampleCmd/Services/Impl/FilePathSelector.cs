@@ -6,6 +6,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Windows.Interop;
 
     using JetBrains.Annotations;
@@ -23,6 +24,7 @@ namespace StarkBIM.SampleRevitApp.Commands.SampleCmd.Services.Impl
         /// Initializes a new instance of the <see cref="FilePathSelector"/> class.
         /// </summary>
         /// <param name="validSaveFilePathChecker">The valid save file checker</param>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Analyzer bug")]
         public FilePathSelector([NotNull] IValidSaveFilePathChecker validSaveFilePathChecker) =>
             _validSaveFilePathChecker = validSaveFilePathChecker ?? throw new ArgumentNullException(nameof(validSaveFilePathChecker));
 
