@@ -13,10 +13,12 @@ namespace StarkBIM.SampleRevitApp.Commands.Test.SampleCommand
     using RvtTestRunner;
     using RvtTestRunner.Util;
 
+    using Xunit;
+
     /// <summary>
     /// Base class for all test sets that require access to an ExternalCommandData instance
     /// </summary>
-    public abstract class RvtTestSetBase
+    public abstract class RvtTestSetBase : IAssemblyFixture<CommandsFixture>
     {
         // Need to get the CommandData from the Test Runner
         [NotNull]
